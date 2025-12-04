@@ -56,6 +56,23 @@ node ace site:stats example.com
 
 ## Deployment
 
+### Install on VPS
+
+```bash
+# Clone to /opt/blip
+sudo git clone https://github.com/edadma/blip.git /opt/blip
+cd /opt/blip
+
+# Install and build
+sudo npm ci
+sudo npm run build
+sudo node ace migration:run
+
+# Configure environment
+sudo cp .env.example .env
+sudo nano .env  # set APP_KEY, NODE_ENV=production
+```
+
 ### systemd
 
 Create `/etc/systemd/system/blip.service`:
@@ -90,4 +107,18 @@ Add to Caddyfile:
 blip.* {
     reverse_proxy localhost:3333
 }
+```
+
+```bash
+sudo systemctl reload caddy
+```
+
+### Updating
+
+```bash
+cd /opt/blip
+sudo git pull
+sudo npm ci
+sudo npm run build
+sudo systemctl restart blip
 ```
