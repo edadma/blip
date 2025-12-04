@@ -27,10 +27,31 @@ List sites:
 node ace site:list
 ```
 
+Remove a site:
+```bash
+node ace site:remove example.com
+```
+
 View stats:
 ```bash
 node ace site:stats           # overview
 node ace site:stats example.com   # specific site
+```
+
+## Local Testing
+
+```bash
+# Add a site
+node ace site:add example.com
+
+# Start server
+node ace serve
+
+# In another terminal, test with curl (fake the Host header)
+curl -X POST -H "Host: blip.example.com" "http://localhost:3333?p=/test-page&r=https://google.com"
+
+# Check it recorded
+node ace site:stats example.com
 ```
 
 ## Deployment
